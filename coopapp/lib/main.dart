@@ -1,7 +1,24 @@
-import 'package:coopapp/Screens/frm_screen.dart';
+import 'package:coopapp/Utiliry/my_constant.dart';
+import 'package:coopapp/states/account.dart';
+import 'package:coopapp/states/create_account.dart';
+import 'package:coopapp/states/login.dart';
+import 'package:coopapp/states/member.dart';
+import 'package:coopapp/states/stock.dart';
 import 'package:flutter/material.dart';
 
+final Map<String, WidgetBuilder> map = {
+  '/Login': (BuildContext context) => const Login(),
+  '/CreateAccount': (BuildContext context) => const CreateAccount(),
+  '/Member': (BuildContext context) => const Member(),
+  '/Account': (BuildContext context) => const Account(),
+  '/Stock': (BuildContext context) => const Stock(),
+};
+
+// ignore: non_constant_identifier_names
+String? InitialRoute;
+
 void main() {
+  InitialRoute = MyConstant.routeLogin;
   runApp(const MyApp());
 }
 
@@ -11,40 +28,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.green,
-      ),
-      home: const MyHomePage(title: 'แอพบัญชี'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-        actions: [
-          IconButton(
-              icon: const Icon(Icons.add),
-              onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return const FromScreen();
-                }));
-              })
-        ],
-      ),
+      title: MyConstant.appName,
+      routes: map,
+      initialRoute: InitialRoute,
     );
   }
 }
