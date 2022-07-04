@@ -17,15 +17,37 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: ListView(
-          children: [
-            buildImage(),
-            buildAppName(),
-            buildUser(),
-            buildPassWord(),
-          ],
+        child: GestureDetector(
+          onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
+          behavior: HitTestBehavior.opaque,
+          child: ListView(
+            children: [
+              buildImage(),
+              buildAppName(),
+              buildUser(),
+              buildPassWord(),
+              buildLogin()
+            ],
+          ),
         ),
       ),
+    );
+  }
+
+  Row buildLogin() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+          margin: const EdgeInsets.symmetric(vertical: 16),
+          width: 250,
+          child: ElevatedButton(
+            style:MyConstant().mybuttonstyle(),
+            onPressed: () {},
+            child: const Text('data'),
+          ),
+        ),
+      ],
     );
   }
 

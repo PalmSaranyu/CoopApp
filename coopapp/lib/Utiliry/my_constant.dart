@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 
 class MyConstant {
 //Genernal
@@ -37,5 +36,13 @@ class MyConstant {
         fontSize: 14,
         color: dark,
         fontWeight: FontWeight.normal,
+      );
+
+  //styleButton
+  ButtonStyle mybuttonstyle() => ElevatedButton.styleFrom(
+        primary: MyConstant.primary,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30),
+        ),
       );
 }
