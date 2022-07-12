@@ -26,11 +26,29 @@ class _LoginState extends State<Login> {
               buildAppName(),
               buildUser(),
               buildPassWord(),
-              buildLogin()
+              buildLogin(),
+              buildCreateAcc(),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  Row buildCreateAcc() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        ShowTitle(
+          title: 'Non Account ? ',
+          textStyle: MyConstant().h3style(),
+        ),
+        TextButton(
+          onPressed: () =>
+              Navigator.pushNamed(context, MyConstant.routeCreateAccount),
+          child: const Text('Create Account'),
+        )
+      ],
     );
   }
 
@@ -42,9 +60,9 @@ class _LoginState extends State<Login> {
           margin: const EdgeInsets.symmetric(vertical: 16),
           width: 250,
           child: ElevatedButton(
-            style:MyConstant().mybuttonstyle(),
+            style: MyConstant().mybuttonstyle(),
             onPressed: () {},
-            child: const Text('data'),
+            child: const Text('Login'),
           ),
         ),
       ],

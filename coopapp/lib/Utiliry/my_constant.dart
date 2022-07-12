@@ -17,9 +17,9 @@ class MyConstant {
   static String image3 = 'images/logo2.png';
 
   //color
-  static Color primary = const Color(0xff87861d);
-  static Color dark = const Color(0xff575900);
-  static Color light = const Color(0xffb9b64e);
+  static Color primary = const Color.fromARGB(255, 4, 243, 24);
+  static Color dark = const Color.fromARGB(255, 0, 85, 0);
+  static Color light = const Color.fromARGB(255, 128, 255, 103);
 
   //style
   TextStyle h1style() => TextStyle(
