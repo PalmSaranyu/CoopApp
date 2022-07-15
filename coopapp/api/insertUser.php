@@ -25,7 +25,7 @@ if (isset($_GET)) {
 		$ime = $_GET['ime'];
 		
 							
-		$sql = "INSERT INTO `Member`(`id`, `user`, `password`, `name`, `lastname`, `ime`) VALUES (Null,'user','password','name','lastname','ime')";
+		$sql = "INSERT INTO `user`(`id`, `user`, `password`, `name`, `lastname`, `ime`) VALUES (Null,'$user','$password','$name','$lastname','$ime')";
 
 		$result = mysqli_query($link, $sql);
 
@@ -35,7 +35,7 @@ if (isset($_GET)) {
 			echo "false";
 		}
 
-	} else echo "Welcome Master UNG";
+	} else echo "Welcome Palm";
    
 }
 	mysqli_close($link);
