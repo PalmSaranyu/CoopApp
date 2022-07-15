@@ -10,8 +10,8 @@ class CreateAccount extends StatefulWidget {
 }
 
 class _CreateAccountState extends State<CreateAccount> {
-bool statusRedEye = true;
-bool statusRedEye2 = true;
+  bool statusRedEye = true;
+  bool statusRedEye2 = true;
 
   Row buildName() {
     return Row(
@@ -144,7 +144,7 @@ bool statusRedEye2 = true;
     );
   }
 
-    Row buildPassword2() {
+  Row buildPassword2() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
