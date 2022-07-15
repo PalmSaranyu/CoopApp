@@ -198,7 +198,7 @@ class _CreateAccountState extends State<CreateAccount> {
         actions: [
           IconButton(
             onPressed: () {
-              if (formKey.currentState!.validate()){}
+              if (formKey.currentState!.validate()) {}
             },
             icon: const Icon(Icons.cloud_upload),
           ),
