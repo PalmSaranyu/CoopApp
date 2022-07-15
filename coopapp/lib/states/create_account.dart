@@ -12,6 +12,7 @@ class CreateAccount extends StatefulWidget {
 class _CreateAccountState extends State<CreateAccount> {
   bool statusRedEye = true;
   bool statusRedEye2 = true;
+  final formKey = GlobalKey<FormState>();
 
   Row buildName() {
     return Row(
@@ -21,6 +22,12 @@ class _CreateAccountState extends State<CreateAccount> {
           margin: const EdgeInsets.only(top: 16),
           width: 250,
           child: TextFormField(
+            validator: (value) {
+              if (value!.isEmpty) {
+                return 'กรุณากรอก ชื่อ ด้วย คะ';
+              } else {}
+              return null;
+            },
             decoration: InputDecoration(
               labelStyle: MyConstant().h3style(),
               labelText: 'ชื่อ :',
@@ -44,32 +51,15 @@ class _CreateAccountState extends State<CreateAccount> {
           margin: const EdgeInsets.only(top: 16),
           width: 250,
           child: TextFormField(
+            validator: (value) {
+              if (value!.isEmpty) {
+                return 'กรุณากรอก นามสกุล ด้วย คะ';
+              } else {}
+              return null;
+            },
             decoration: InputDecoration(
               labelStyle: MyConstant().h3style(),
               labelText: 'นามสกุล :',
-              prefixIcon: const Icon(Icons.fingerprint),
-              enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: MyConstant.dark)),
-              focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: MyConstant.light)),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Row buildGroup() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Container(
-          margin: const EdgeInsets.only(top: 16),
-          width: 250,
-          child: TextFormField(
-            decoration: InputDecoration(
-              labelStyle: MyConstant().h3style(),
-              labelText: 'กลุ่ม :',
               prefixIcon: const Icon(Icons.fingerprint),
               enabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(color: MyConstant.dark)),
@@ -90,10 +80,16 @@ class _CreateAccountState extends State<CreateAccount> {
           margin: const EdgeInsets.only(top: 16),
           width: 250,
           child: TextFormField(
+            validator: (value) {
+              if (value!.isEmpty) {
+                return 'กรุณากรอก ชื่อใช้เข้าระบบ ด้วย คะ';
+              } else {}
+              return null;
+            },
             decoration: InputDecoration(
               labelStyle: MyConstant().h3style(),
               labelText: 'ชื่อใช้เข้าระบบ :',
-              prefixIcon: const Icon(Icons.fingerprint),
+              prefixIcon: const Icon(Icons.perm_identity),
               enabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(color: MyConstant.dark)),
               focusedBorder: OutlineInputBorder(
@@ -113,6 +109,12 @@ class _CreateAccountState extends State<CreateAccount> {
           margin: const EdgeInsets.only(top: 16),
           width: 250,
           child: TextFormField(
+            validator: (value) {
+              if (value!.isEmpty) {
+                return 'กรุณากรอก Password ด้วย คะ';
+              } else {}
+              return null;
+            },
             obscureText: statusRedEye,
             decoration: InputDecoration(
               suffixIcon: IconButton(
@@ -152,6 +154,12 @@ class _CreateAccountState extends State<CreateAccount> {
           margin: const EdgeInsets.only(top: 16),
           width: 250,
           child: TextFormField(
+            validator: (value) {
+              if (value!.isEmpty) {
+                return 'กรุณากรอก ยืนยันรหัสผ่าน ด้วย คะ';
+              } else {}
+              return null;
+            },
             obscureText: statusRedEye2,
             decoration: InputDecoration(
               suffixIcon: IconButton(
@@ -183,27 +191,18 @@ class _CreateAccountState extends State<CreateAccount> {
     );
   }
 
-  Row buildCreate() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Container(
-          margin: const EdgeInsets.symmetric(vertical: 16),
-          width: 250,
-          child: ElevatedButton(
-            style: MyConstant().mybuttonstyle(),
-            onPressed: () {},
-            child: const Text('บันทึกข้อมูล'),
-          ),
-        ),
-      ],
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        actions: [
+          IconButton(
+            onPressed: () {
+              if (formKey.currentState!.validate()){}
+            },
+            icon: const Icon(Icons.cloud_upload),
+          ),
+        ],
         title: const Text('สร้างข้อมูล'),
         backgroundColor: MyConstant.primary,
       ),
@@ -211,17 +210,20 @@ class _CreateAccountState extends State<CreateAccount> {
         child: GestureDetector(
           onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
           behavior: HitTestBehavior.opaque,
-          child: ListView(
-            padding: const EdgeInsets.all(16),
-            children: [
-              buildTitle('ข้อมูลทั่วไป'),
-              buildName(),
-              buildLastName(),
-              buildUsername(),
-              buildPassword1(),
-              buildPassword2(),
-              buildCreate(),
-            ],
+          child: Form(
+            key: formKey,
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  buildTitle('ข้อมูลทั่วไป'),
+                  buildName(),
+                  buildLastName(),
+                  buildUsername(),
+                  buildPassword1(),
+                  buildPassword2(),
+                ],
+              ),
+            ),
           ),
         ),
       ),
