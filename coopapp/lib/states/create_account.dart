@@ -1,4 +1,5 @@
 import 'package:coopapp/Utiliry/my_constant.dart';
+import 'package:coopapp/Utiliry/my_dialog.dart';
 import 'package:coopapp/widgets/show_title.dart';
 import 'package:flutter/material.dart';
 
@@ -13,6 +14,11 @@ class _CreateAccountState extends State<CreateAccount> {
   bool statusRedEye = true;
   bool statusRedEye2 = true;
   final formKey = GlobalKey<FormState>();
+  TextEditingController nameController = TextEditingController();
+  TextEditingController lastnameController = TextEditingController();
+  TextEditingController usernameController = TextEditingController();
+  TextEditingController password1Controller = TextEditingController();
+  TextEditingController password2Controller = TextEditingController();
 
   Row buildName() {
     return Row(
@@ -22,6 +28,7 @@ class _CreateAccountState extends State<CreateAccount> {
           margin: const EdgeInsets.only(top: 16),
           width: 250,
           child: TextFormField(
+            controller: nameController,
             validator: (value) {
               if (value!.isEmpty) {
                 return 'กรุณากรอก ชื่อ ด้วย คะ';
@@ -51,6 +58,7 @@ class _CreateAccountState extends State<CreateAccount> {
           margin: const EdgeInsets.only(top: 16),
           width: 250,
           child: TextFormField(
+            controller: lastnameController,
             validator: (value) {
               if (value!.isEmpty) {
                 return 'กรุณากรอก นามสกุล ด้วย คะ';
@@ -80,6 +88,7 @@ class _CreateAccountState extends State<CreateAccount> {
           margin: const EdgeInsets.only(top: 16),
           width: 250,
           child: TextFormField(
+            controller: usernameController,
             validator: (value) {
               if (value!.isEmpty) {
                 return 'กรุณากรอก ชื่อใช้เข้าระบบ ด้วย คะ';
@@ -109,6 +118,7 @@ class _CreateAccountState extends State<CreateAccount> {
           margin: const EdgeInsets.only(top: 16),
           width: 250,
           child: TextFormField(
+            controller: password1Controller,
             validator: (value) {
               if (value!.isEmpty) {
                 return 'กรุณากรอก Password ด้วย คะ';
@@ -154,6 +164,7 @@ class _CreateAccountState extends State<CreateAccount> {
           margin: const EdgeInsets.only(top: 16),
           width: 250,
           child: TextFormField(
+            controller: password2Controller,
             validator: (value) {
               if (value!.isEmpty) {
                 return 'กรุณากรอก ยืนยันรหัสผ่าน ด้วย คะ';
@@ -198,7 +209,14 @@ class _CreateAccountState extends State<CreateAccount> {
         actions: [
           IconButton(
             onPressed: () {
-              if (formKey.currentState!.validate()) {}
+              if (formKey.currentState!.validate()) {
+                if (password1Controller.text == password2Controller.text) {
+                  print('รหัสเหมือนกัน');
+                } else {
+                  Mydialog().normalDialog(
+                      context, 'รหัสไม่ตรงกัน', 'กรุณาหรอกรหัสให้ตรงกัน');
+                }
+              }
             },
             icon: const Icon(Icons.cloud_upload),
           ),
@@ -228,6 +246,14 @@ class _CreateAccountState extends State<CreateAccount> {
         ),
       ),
     );
+  }
+
+  Future<Null> InsertData() async {
+    String name = nameController.text;
+    String lastname = lastnameController.text;
+    String user = usernameController.text;
+    String password1 = password1Controller.text;
+    String password2 = password2Controller.text;
   }
 
   Container buildTitle(String title) {
