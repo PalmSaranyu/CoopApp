@@ -1,6 +1,9 @@
+// ignore_for_file: avoid_print, prefer_void_to_null, non_constant_identifier_names
+
 import 'package:coopapp/Utiliry/my_constant.dart';
 import 'package:coopapp/Utiliry/my_dialog.dart';
 import 'package:coopapp/widgets/show_title.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
 class CreateAccount extends StatefulWidget {
@@ -211,10 +214,10 @@ class _CreateAccountState extends State<CreateAccount> {
             onPressed: () {
               if (formKey.currentState!.validate()) {
                 if (password1Controller.text == password2Controller.text) {
-                  print('รหัสเหมือนกัน');
+                  InsertData();
                 } else {
                   Mydialog().normalDialog(
-                      context, 'รหัสไม่ตรงกัน', 'กรุณาหรอกรหัสให้ตรงกัน');
+                      context, 'รหัสไม่ตรงกัน', 'กรุณากรอกรหัสให้ตรงกัน');
                 }
               }
             },
@@ -252,8 +255,11 @@ class _CreateAccountState extends State<CreateAccount> {
     String name = nameController.text;
     String lastname = lastnameController.text;
     String user = usernameController.text;
-    String password1 = password1Controller.text;
-    String password2 = password2Controller.text;
+    String password = password1Controller.text;
+    print('name=$name,lastname=$lastname,username=$user,passwoed=$password');
+    String path =
+        '${MyConstant.domain}/coopapp/getUserWhereUser.php?isAdd=true&user=$user';
+    await Dio().get(path).then((value) => print('## value ==>> $value'));
   }
 
   Container buildTitle(String title) {
