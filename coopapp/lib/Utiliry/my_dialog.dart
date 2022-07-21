@@ -4,7 +4,7 @@ import 'package:coopapp/widgets/show_image.dart';
 import 'package:flutter/material.dart';
 
 class Mydialog {
-  Future<Null> normalDialog(
+  Future<void> normalDialog(
       BuildContext context, String title, String massage) async {
     showDialog(
       context: context,

@@ -257,8 +257,21 @@ class _CreateAccountState extends State<CreateAccount> {
     String user = usernameController.text;
     String password = password1Controller.text;
     print('name=$name,lastname=$lastname,username=$user,passwoed=$password');
-    String path = '${MyConstant.domain}/coopapp/getUserWhereUser.php?isAdd=true&user=$user';
-    await Dio().get(path).then((value) => print('## value ==>> $value'));
+    String path =
+        '${MyConstant.domain}/coopapp/getUserWhereUser.php?isAdd=true&user=$user';
+    await Dio().get(path).then((value) {
+      print('## value ==>> $value');
+      if (value.toString() == 'null') {
+        processInsertSQL();
+      } else {
+        Mydialog().normalDialog(
+            context, 'UserName ซ้ำ', 'กรุณาเปลี่ยน UserName ใหม่');
+      }
+    });
+  }
+
+  Future<Null> processInsertSQL() async {
+    print('### เชื่อต่อฐานข้อมูลเ');
   }
 
   Container buildTitle(String title) {

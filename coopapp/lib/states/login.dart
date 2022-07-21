@@ -1,6 +1,11 @@
+// ignore_for_file: unused_local_variable, prefer_void_to_null, avoid_print
+import 'dart:convert';
 import 'package:coopapp/Utiliry/my_constant.dart';
+import 'package:coopapp/Utiliry/my_dialog.dart';
+import 'package:coopapp/models/user_model.dart';
 import 'package:coopapp/widgets/show_image.dart';
 import 'package:coopapp/widgets/show_title.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
 class Login extends StatefulWidget {
@@ -12,6 +17,9 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   bool statusRedEye = true;
+  final formKey = GlobalKey<FormState>();
+  TextEditingController userController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -20,15 +28,18 @@ class _LoginState extends State<Login> {
         child: GestureDetector(
           onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
           behavior: HitTestBehavior.opaque,
-          child: ListView(
-            children: [
-              buildImage(),
-              buildAppName(),
-              buildUser(),
-              buildPassWord(),
-              buildLogin(),
-              buildCreateAcc(),
-            ],
+          child: Form(
+            key: formKey,
+            child: ListView(
+              children: [
+                buildImage(),
+                buildAppName(),
+                buildUser(),
+                buildPassWord(),
+                buildLogin(),
+                buildCreateAcc(),
+              ],
+            ),
           ),
         ),
       ),
@@ -61,12 +72,42 @@ class _LoginState extends State<Login> {
           width: 250,
           child: ElevatedButton(
             style: MyConstant().mybuttonstyle(),
-            onPressed: () {},
+            onPressed: () {
+              if (formKey.currentState!.validate()) {}
+              String user = userController.text;
+              String password = passwordController.text;
+              print('## user=$user,password=$password');
+              checkLogin(user: user, password: password);
+            },
             child: const Text('Login'),
           ),
         ),
       ],
     );
+  }
+
+  Future<Null> checkLogin({String? user, String? password}) async {
+    String apiCheckLogin =
+        '${MyConstant.domain}/coopapp/getUserWhereUser.php?isAdd=true&user=$user';
+    await Dio().get(apiCheckLogin).then((value) {
+      print('### value for API ==>> $value');
+      if (value.toString() == 'null') {
+        Mydialog()
+            .normalDialog(context, 'User ผิดพลาด', 'ไม่มี $user นี้ ในระบบ');
+      } else {
+        for (var item in json.decode(value.data)) {
+          UserModel model = UserModel.fromMap(item);
+          if (password == model.password) {
+            //Success Login
+            String type;
+          } else {
+            //Login False
+            Mydialog()
+                .normalDialog(context, 'รหัสผิดหลาด', 'กรุณากรอกรหัสใหม่');
+          }
+        }
+      }
+    });
   }
 
   Row buildUser() {
@@ -77,6 +118,14 @@ class _LoginState extends State<Login> {
           margin: const EdgeInsets.only(top: 16),
           width: 250,
           child: TextFormField(
+            controller: userController,
+            validator: (value) {
+              if (value!.isEmpty) {
+                return 'กรุณากรอกUser';
+              } else {
+                return null;
+              }
+            },
             decoration: InputDecoration(
               labelStyle: MyConstant().h3style(),
               labelText: 'User :',
@@ -100,6 +149,14 @@ class _LoginState extends State<Login> {
           margin: const EdgeInsets.only(top: 16),
           width: 250,
           child: TextFormField(
+            controller: passwordController,
+            validator: (value) {
+              if (value!.isEmpty) {
+                return 'กรุณากรอกPassword';
+              } else {
+                return null;
+              }
+            },
             obscureText: statusRedEye,
             decoration: InputDecoration(
               suffixIcon: IconButton(
