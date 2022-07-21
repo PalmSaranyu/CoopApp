@@ -257,8 +257,7 @@ class _CreateAccountState extends State<CreateAccount> {
     String user = usernameController.text;
     String password = password1Controller.text;
     print('name=$name,lastname=$lastname,username=$user,passwoed=$password');
-    String path =
-        '${MyConstant.domain}/coopapp/getUserWhereUser.php?isAdd=true&user=$user';
+    String path = '${MyConstant.domain}/coopapp/getUserWhereUser.php?isAdd=true&user=$user';
     await Dio().get(path).then((value) => print('## value ==>> $value'));
   }
 

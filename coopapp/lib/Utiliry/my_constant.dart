@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class MyConstant {
 //Genernal
   static String appName = 'CoopApp';
-  static String domain = 'www.coopmcr.com';
+  static String domain = 'http://www.coopmcr.com';
 
   //route
   static String routeLogin = '/Login';
