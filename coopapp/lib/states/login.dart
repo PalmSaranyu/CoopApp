@@ -99,7 +99,11 @@ class _LoginState extends State<Login> {
           UserModel model = UserModel.fromMap(item);
           if (password == model.password) {
             //Success Login
-            String type;
+            String name = model.name;
+            String lastname = model.lastname;
+            print('## name == $name ; lastname == $lastname');
+            Navigator.pushNamedAndRemoveUntil(
+                context, MyConstant.routeMember, (route) => false);
           } else {
             //Login False
             Mydialog()
