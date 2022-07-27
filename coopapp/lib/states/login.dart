@@ -1,4 +1,4 @@
-// ignore_for_file: unused_local_variable, prefer_void_to_null, avoid_print
+// ignore_for_file: unused_local_variable, prefer_void_to_null, avoid_print, use_build_context_synchronously
 import 'dart:convert';
 import 'package:coopapp/Utiliry/my_constant.dart';
 import 'package:coopapp/Utiliry/my_dialog.dart';
@@ -7,6 +7,7 @@ import 'package:coopapp/widgets/show_image.dart';
 import 'package:coopapp/widgets/show_title.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -89,7 +90,7 @@ class _LoginState extends State<Login> {
   Future<Null> checkLogin({String? user, String? password}) async {
     String apiCheckLogin =
         '${MyConstant.domain}/coopapp/getUserWhereUser.php?isAdd=true&user=$user';
-    await Dio().get(apiCheckLogin).then((value) {
+    await Dio().get(apiCheckLogin).then((value) async {
       print('### value for API ==>> $value');
       if (value.toString() == 'null') {
         Mydialog()
@@ -99,9 +100,11 @@ class _LoginState extends State<Login> {
           UserModel model = UserModel.fromMap(item);
           if (password == model.password) {
             //Success Login
-            String name = model.name;
-            String lastname = model.lastname;
-            print('## name == $name ; lastname == $lastname');
+            String user = model.user;
+            print('## user == $user');
+            SharedPreferences preferences =
+                await SharedPreferences.getInstance();
+            preferences.setString('user', model.user);
             Navigator.pushNamedAndRemoveUntil(
                 context, MyConstant.routeMember, (route) => false);
           } else {
