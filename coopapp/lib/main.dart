@@ -3,6 +3,7 @@
 import 'package:coopapp/Utiliry/my_constant.dart';
 import 'package:coopapp/states/account.dart';
 import 'package:coopapp/states/create_account.dart';
+import 'package:coopapp/states/loan.dart';
 import 'package:coopapp/states/login.dart';
 import 'package:coopapp/states/member.dart';
 import 'package:coopapp/states/stock.dart';
@@ -15,6 +16,7 @@ final Map<String, WidgetBuilder> map = {
   '/Member': (BuildContext context) => const Member(),
   '/Account': (BuildContext context) => const Account(),
   '/Stock': (BuildContext context) => const Stock(),
+  '/Loan': (BuildContext context) => const Loan(),
 };
 
 // ignore: non_constant_identifier_names
@@ -39,10 +41,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    MaterialColor materialColor =
+        MaterialColor(0xEB02801D, MyConstant.mapMateriaColor);
     return MaterialApp(
       title: MyConstant.appName,
       routes: map,
       initialRoute: InitialRoute,
+      theme: ThemeData(primarySwatch: materialColor),
     );
   }
 }

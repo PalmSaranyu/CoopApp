@@ -236,7 +236,7 @@ class _CreateAccountState extends State<CreateAccount> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  buildTitle('ข้อมูลทั่วไป'),
+                  buildTitle('กรอกข้อมูลเพื่อสร้างUser'),
                   buildName(),
                   buildLastName(),
                   buildUsername(),
@@ -252,15 +252,10 @@ class _CreateAccountState extends State<CreateAccount> {
   }
 
   Future<Null> InsertData() async {
-    String name = nameController.text;
-    String lastname = lastnameController.text;
     String user = usernameController.text;
-    String password = password1Controller.text;
-    print('name=$name,lastname=$lastname,username=$user,passwoed=$password');
     String path =
         '${MyConstant.domain}/coopapp/getUserWhereUser.php?isAdd=true&user=$user';
     await Dio().get(path).then((value) {
-      print('## value ==>> $value');
       if (value.toString() == 'null') {
         processInsertSQL();
       } else {
@@ -271,7 +266,21 @@ class _CreateAccountState extends State<CreateAccount> {
   }
 
   Future<Null> processInsertSQL() async {
-    print('### เชื่อต่อฐานข้อมูลเ');
+    String name = nameController.text;
+    String lastname = lastnameController.text;
+    String user = usernameController.text;
+    String password = password1Controller.text;
+    String path =
+        '${MyConstant.domain}/coopapp/insertUser.php?isAdd=true&user=$user&password=$password&name=$name&lastname=$lastname&ime=';
+    await Dio().get(path).then((value) {
+      if (value.toString() == 'true') {
+        Navigator.pushNamedAndRemoveUntil(
+            context, MyConstant.routeLogin, (route) => false);
+      } else {
+        Mydialog().normalDialog(
+            context, 'สร้างข้อมูลผิดพลาด', 'กรุณาติดต่อผู้ดูแลระบบ');
+      }
+    });
   }
 
   Container buildTitle(String title) {
